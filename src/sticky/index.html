@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stick Notes</title>
+    <link rel="stylesheet" href="index.css">
+    <script src="./lib/vue.global.prod.js"></script>
+    <script src="./lib/marked.min.js"></script>
+    <script src="./lib/hotkeys.min.js"></script>
+</head>
+
+<body>
+    <div id="sticky-board">
+        <ul id="stickies">
+            <li v-for="sticky in stickies" :class="{ editing: editingSticky==sticky}">
+                <div class="operations">
+                    <button v-if="editingSticky!=sticky" v-on:click="editSticky(sticky)" title="编辑">🖊️</button>
+                    <button v-if="editingSticky==sticky" v-on:click="confirmEdit(sticky)" title="确认编辑">✔️</button>
+                    <button v-if="editingSticky==sticky" v-on:click="cancleEdit()" title="取消编辑">❌</button>
+                    <button v-if="editingSticky!=sticky" v-on:click="move(sticky, -1)" title="前移">
+                        <svg width="20" height="20">
+                            <path
+                                d="M 8.115,10.943L 8.115,15.893 L 4.693,15.893 L 4.693,4.693 L 15.894,4.693 L 15.894,8.115 L 10.944,8.115 L 17.308,14.479 L 14.48,17.307 L 8.115,10.943ZM 22,22" />
+                        </svg>
+                    </button>
+                    <button v-if="editingSticky!=sticky" v-on:click="move(sticky, 1)" title="后移">
+                        <svg width="20" height="20">
+                            <path
+                                d="M 13.885,11.057L 13.885,6.107 L 17.307,6.107 L 17.307,17.308 L 6.107,17.308 L 6.107,13.886 L 11.057,13.886 L 4.693,7.521 L 7.521,4.693 L 13.885,11.057ZM 22,22" />
+                        </svg></button>
+                    <button v-if="editingSticky!=sticky" v-on:click="removeSticky(sticky)" title="删除">🗑️</button>
+                </div>
+                <div class="paper">
+                    <div class="content">
+                        <span v-if="editingSticky!=sticky" v-html="compiledMarkdown(sticky)"></span>
+                        <textarea v-if="editingSticky==sticky" v-model="editingContent" v-focus></textarea>
+                    </div>
+                </div>
+            </li>
+            <li class="add-button" v-if="!isAdding" v-on:click="addSticky()">
+                <div class="paper">
+                    <svg width="76" height="76">
+                        <path
+                            d="M 0,0M 76,76M 35,19L 41,19L 41,35L 57,35L 57,41L 41,41L 41,57L 35,57L 35,41L 19,41L 19,35L 35,35L 35,19 Z " />
+                    </svg>
+                </div>
+            </li>
+        </ul>
+    </div>
+</body>
+
+<script type="text/javascript" src="./index.js"></script>
+
+</html>

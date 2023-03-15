@@ -1,0 +1,192 @@
+body {
+    background-color: #dbdbdb;
+    font-size: 100%;
+  }
+  
+  form input#note_text {
+    width: 350px;
+  }
+  
+  /* sticky note */
+  
+  #sticky-board {
+    margin-left: 20px;
+  }
+  
+  ul#stickies {
+    padding: 0;
+  }
+  
+  ul#stickies>li {
+    list-style: none;
+    position: relative;
+    z-index: 1;
+    float: left;
+    margin: 30px;
+    width: 260px;
+    height: 260px;
+    color: black;
+    text-decoration: none;
+    transition: all 0.3s ease-in-out;
+  }
+  
+  @media (max-width: 500px) {
+    #sticky-board {
+      margin-left: auto;
+    }
+  
+    ul#stickies {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+  
+    ul#stickies>li {
+      margin: 10px;
+    }
+  }
+  
+  ul#stickies>li>.paper {
+    border: 1px solid #bfbfbf;
+    /* use #fafad2 if name doesn't work */
+    background-color: LightGoldenRodYellow;
+    box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.4);
+    float: left;
+    min-width: 260px;
+    max-width: 260px;
+    transition: max-width 0.25s ease-out;
+  }
+  
+  ul#stickies>li>.paper>.content {
+    margin-top: 15px;
+    margin-left: 15px;
+    margin-right: 15px;
+    margin-bottom: 0;
+    min-height: 230px;
+    max-height: 230px;
+    transition: max-height 0.25s ease-out, margin-bottom 0.25s ease-in;
+    display: block;
+    color: black;
+    overflow: hidden;
+    cursor: default;
+  }
+  
+  ul#stickies>li>.paper>.content>span ul {
+    padding-left: 24px;
+  }
+  
+  ul#stickies>li>.paper>.content>span p {
+    margin: 8px auto;
+  }
+  
+  ul#stickies>li:hover>.paper {
+    /* 设置后，鼠标移入便笺将自适应变宽 */
+    max-width: 500px;
+    transition: max-width 0.25s ease-in
+  }
+  
+  ul#stickies>li:hover>.paper>.content {
+    max-height: 500px;
+    margin-bottom: 15px;
+    transition: max-height 0.25s ease-in, margin-bottom 0.25s ease-in;
+  }
+  
+  ul#stickies>li>.paper>.content textarea {
+    margin: 0px;
+    width: 223px;
+    height: 223px;
+    resize: none;
+  }
+  
+  ul#stickies>li>.operations {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: absolute;
+    top: 0;
+    left: -35px;
+    padding: 5px;
+    background: transparent;
+  }
+  
+  ul#stickies>li>.operations>button {
+    width: 24px;
+    height: 24px;
+    padding: 0;
+    opacity: 0;
+  }
+  
+  @keyframes enable-pointer-events {
+    0%, 99% {
+      /* 动画前 99% 的时间都禁用点击，从而达到延迟的目的 */
+      pointer-events: none;
+    }
+  }
+  
+  ul#stickies>li.editing>.operations>button {
+    opacity: 1;
+    /* 按钮显示 100ms 后才可以点击，避免点击到隐藏的按钮 */
+    animation: enable-pointer-events 100ms;
+  }
+  
+  ul#stickies>li:hover>.operations>button {
+    opacity: 1;
+    animation: enable-pointer-events 100ms;
+  }
+  
+  ul#stickies>li.add-button>.paper {
+    height: 260px;
+    opacity: 0.3;
+    display: flex;
+  }
+  
+  ul#stickies>li.add-button>.paper>svg {
+    margin: auto;
+    opacity: 0.5;
+  }
+  
+  /* 
+   * rotation
+   */
+  ul#stickies>li:nth-child(even) {
+    transform: rotate(2deg);
+  }
+  
+  ul#stickies>li:nth-child(odd) {
+    transform: rotate(-1deg);
+  }
+  
+  ul#stickies>li:nth-child(3n) {
+    transform: rotate(1deg);
+  }
+  
+  /* 
+     Transform demo 
+     Uses the transition (defined above) to ease in.
+  */
+  ul#stickies>li:hover {
+    transform: rotate(0deg) scale(1.05);
+    z-index: 10;
+  }
+  
+  /* 
+     Transform demo 
+     Uses the transition (defined above) to ease in.
+  */
+  ul#stickies>li.editing {
+    transform: rotate(0deg) scale(1.05);
+    z-index: 10;
+  }
+  
+  ul#stickies>li:hover>.paper {
+    box-shadow: 5px 5px 6px rgba(0, 0, 0, 0.4);
+  }
+  
+  ul#stickies>li.editing>.paper {
+    box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.4);
+  }
+  
+  ul#stickies>li.editing>.paper>.content {
+    margin-bottom: 15px;
+  }
