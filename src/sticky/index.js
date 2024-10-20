@@ -33,7 +33,7 @@ Vue.createApp({
   },
   methods: {
     getStickies() {
-      fetch(`http://h5api.lymim.com/sticky`)
+      fetch(`https://h5api.lymim.com/sticky`)
         .then(res => res.json())
         .then(objs => {
           objs.forEach(obj => {
@@ -58,7 +58,7 @@ Vue.createApp({
       if (this.editingSticky.uid != null) {
         // 完成编辑
         console.log(`提交便笺修改 ${JSON.stringify(this.editingSticky)}`);
-        fetch(`http://h5api.lymim.com/sticky?uid=${this.editingSticky.uid}`, {
+        fetch(`https://h5api.lymim.com/sticky?uid=${this.editingSticky.uid}`, {
           method: 'PUT',
           headers: {
             'Content-Type': 'application/json',
@@ -69,7 +69,7 @@ Vue.createApp({
         // 完成新增
         console.log(`提交新便笺 ${JSON.stringify(this.editingSticky)}`);
         const pendingSticky = this.editingSticky;
-        fetch(`http://h5api.lymim.com/sticky`, {
+        fetch(`https://h5api.lymim.com/sticky`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -115,7 +115,7 @@ Vue.createApp({
       var index = this.stickies.indexOf(sticky);
       this.stickies.splice(index, 1);
 
-      fetch(`http://h5api.lymim.com/sticky?uid=${sticky.uid}`, {
+      fetch(`https://h5api.lymim.com/sticky?uid=${sticky.uid}`, {
         method: 'DELETE',
       });
     },
